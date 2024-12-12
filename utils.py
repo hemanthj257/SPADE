@@ -21,11 +21,15 @@ class SAROpticalDataset(Dataset):
 
         # Load SAR image in grayscale and normalize to [0, 1]
         sar_img = cv2.imread(sar_img_path, cv2.IMREAD_GRAYSCALE)
+        if sar_img is None:
+            raise FileNotFoundError(f"Failed to load SAR image at path: {sar_img_path}")
         sar_img = cv2.resize(sar_img, self.img_size) / 255.0
         sar_img = np.expand_dims(sar_img, axis=0)  # Shape: (1, H, W)
 
         # Load optical image, convert from BGR to RGB, and normalize to [-1, 1]
         optical_img = cv2.imread(optical_img_path)
+        if optical_img is None:
+            raise FileNotFoundError(f"Failed to load optical image at path: {optical_img_path}")
         optical_img = cv2.cvtColor(optical_img, cv2.COLOR_BGR2RGB)  # Convert to RGB
         optical_img = cv2.resize(optical_img, self.img_size)
         optical_img = (optical_img / 127.5) - 1  # Normalize to [-1, 1]

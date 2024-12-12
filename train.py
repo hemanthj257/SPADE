@@ -23,7 +23,7 @@ transform = transforms.Compose([
 ])
 
 # Load Data
-dataset = SAROpticalDataset("images/sar_train/", "images/oi_train/", transform=transform)
+dataset = SAROpticalDataset("images/sar_train/", "images/oi_train/")
 dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 print(f"Number of training samples: {len(dataset)}")
 print(f"Number of batches: {len(dataloader)}")
